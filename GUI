@@ -1,0 +1,202 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Hitbox & FOV Tool",
+    LoadingTitle = "Hitbox & FOV Tool",
+    LoadingSubtitle = "by Voids",
+    ConfigurationSaving = {
+        Enabled = false
+    }
+})
+
+-- =============================================================================
+-- TABS
+-- =============================================================================
+local TradeTab = Window:CreateTab("Main Features", 4483362458)
+local SettingsTab = Window:CreateTab("Settings", 4483362459)
+local CreditsTab = Window:CreateTab("Credits", 4483362460)
+
+-- =============================================================================
+-- STATES (Variables remain unchanged to keep original script logic identical)
+-- =============================================================================
+local freezeTrade = false
+local forceAccept = false
+local forceConfirm = false
+local forceWeapons = false
+local forceTokens = false
+
+-- =============================================================================
+-- TOGGLES (Main Features Tab)
+-- =============================================================================
+
+-- Hitbox Extender Toggle
+TradeTab:CreateToggle({
+    Name = "Hitbox Extender",
+    CurrentValue = false,
+    Callback = function(Value)
+        freezeTrade = Value
+        Rayfield:Notify({  
+            Title = "Hitbox Extender",  
+            Content = Value and "Enabled" or "Disabled",  
+            Duration = 2  
+        })
+    end
+})
+
+-- Custom FOV Toggle
+TradeTab:CreateToggle({
+    Name = "Enable Custom FOV",
+    CurrentValue = false,
+    Callback = function(Value)
+        forceAccept = Value
+        Rayfield:Notify({  
+            Title = "Custom FOV",  
+            Content = Value and "Enabled" or "Disabled",  
+            Duration = 2  
+        })
+    end
+})
+
+-- Visualizer Toggle
+TradeTab:CreateToggle({
+    Name = "Show Hitbox Visualizer",
+    CurrentValue = false,
+    Callback = function(Value)
+        forceConfirm = Value
+        Rayfield:Notify({  
+            Title = "Hitbox Visualizer",  
+            Content = Value and "Enabled" or "Disabled",  
+            Duration = 2  
+        })
+    end
+})
+
+-- Max Hitbox Size Toggle
+TradeTab:CreateToggle({
+    Name = "Force Max Hitbox Size",
+    CurrentValue = false,
+    Callback = function(Value)
+        forceWeapons = Value
+        Rayfield:Notify({  
+            Title = "Max Hitbox",  
+            Content = Value and "Enabled" or "Disabled",  
+            Duration = 2  
+        })
+    end
+})
+
+-- FOV Dynamic Zoom Toggle
+TradeTab:CreateToggle({
+    Name = "Dynamic FOV Zoom",
+    CurrentValue = false,
+    Callback = function(Value)
+        forceTokens = Value
+        Rayfield:Notify({  
+            Title = "Dynamic FOV",  
+            Content = Value and "Enabled" or "Disabled",  
+            Duration = 2  
+        })
+    end
+})
+
+-- =============================================================================
+-- BUTTONS (Instant Actions)
+-- =============================================================================
+TradeTab:CreateButton({
+    Name = "Instantly Maximize FOV",
+    Callback = function()
+        Rayfield:Notify({
+            Title = "FOV Changer",
+            Content = "FOV Maxed Out Triggered!",
+            Duration = 2
+        })
+        -- TODO: Insert game-specific RemoteEvent/Function logic here
+    end
+})
+
+TradeTab:CreateButton({
+    Name = "Instantly Expand Hitboxes",
+    Callback = function()
+        Rayfield:Notify({
+            Title = "Hitbox Extender",
+            Content = "Hitbox Expansion Triggered!",
+            Duration = 2
+        })
+        -- TODO: Insert game-specific RemoteEvent/Function logic here
+    end
+})
+
+TradeTab:CreateButton({
+    Name = "Refresh Hitbox Links",
+    Callback = function()
+        Rayfield:Notify({
+            Title = "Hitbox Setup",
+            Content = "Hitbox Links Refreshed!",
+            Duration = 2
+        })
+        -- TODO: Insert game-specific RemoteEvent/Function logic here
+    end
+})
+
+TradeTab:CreateButton({
+    Name = "Reset Camera FOV",
+    Callback = function()
+        Rayfield:Notify({
+            Title = "FOV Setup",
+            Content = "Camera FOV Reset Triggered!",
+            Duration = 2
+        })
+        -- TODO: Insert game-specific RemoteEvent/Function logic here
+    end
+})
+
+-- =============================================================================
+-- LOOP SYSTEM (Background Routine)
+-- =============================================================================
+task.spawn(function()
+    while true do
+        task.wait(0.5)
+
+        if freezeTrade then  
+            -- Original freezeTrade logic
+            print("Hitbox Extender Active")  
+        end  
+
+        if forceAccept then  
+            -- Original forceAccept logic
+            print("Custom FOV Active")  
+        end  
+
+        if forceConfirm then  
+            -- Original forceConfirm logic
+            print("Hitbox Visualizer Active")  
+        end  
+
+        if forceWeapons then  
+            -- Original forceWeapons logic
+            print("Max Hitbox Active")  
+        end  
+
+        if forceTokens then  
+            -- Original forceTokens logic
+            print("Dynamic FOV Active")  
+        end  
+    end
+end)
+
+-- =============================================================================
+-- SETTINGS & CREDITS
+-- =============================================================================
+SettingsTab:CreateToggle({
+    Name = "UI Blur",
+    CurrentValue = false,
+    Callback = function(Value)
+        if Value then
+            print("UI Blur Enabled")
+        else
+            print("UI Blur Disabled")
+        end
+    end
+})
+
+CreditsTab:CreateLabel("Script By scriptsnova")
