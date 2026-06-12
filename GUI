@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Hitbox & FOV Tool",
+    Name = "Hitbox Extender and FOV Changer",
     LoadingTitle = "Hitbox & FOV Tool",
     LoadingSubtitle = "by Voids",
     ConfigurationSaving = {
@@ -9,32 +9,25 @@ local Window = Rayfield:CreateWindow({
     }
 })
 
--- =============================================================================
 -- TABS
--- =============================================================================
-local TradeTab = Window:CreateTab("Main Features", 4483362458)
+local MainTab = Window:CreateTab("Main", 4483362458)
 local SettingsTab = Window:CreateTab("Settings", 4483362459)
 local CreditsTab = Window:CreateTab("Credits", 4483362460)
 
--- =============================================================================
--- STATES (Variables remain unchanged to keep original script logic identical)
--- =============================================================================
-local freezeTrade = false
-local forceAccept = false
-local forceConfirm = false
-local forceWeapons = false
-local forceTokens = false
+-- STATES
+local hitboxExtender = false
+local fovChanger = false
+local wallbangActive = false
+local silentAim = false
+local espActive = false
 
--- =============================================================================
--- TOGGLES (Main Features Tab)
--- =============================================================================
-
--- Hitbox Extender Toggle
-TradeTab:CreateToggle({
+-- HITBOX EXTENDER TOGGLE
+MainTab:CreateToggle({
     Name = "Hitbox Extender",
     CurrentValue = false,
     Callback = function(Value)
-        freezeTrade = Value
+        hitboxExtender = Value
+
         Rayfield:Notify({  
             Title = "Hitbox Extender",  
             Content = Value and "Enabled" or "Disabled",  
@@ -43,160 +36,161 @@ TradeTab:CreateToggle({
     end
 })
 
--- Custom FOV Toggle
-TradeTab:CreateToggle({
-    Name = "Enable Custom FOV",
+-- FOV CHANGER TOGGLE
+MainTab:CreateToggle({
+    Name = "FOV Changer",
     CurrentValue = false,
     Callback = function(Value)
-        forceAccept = Value
+        fovChanger = Value
+
         Rayfield:Notify({  
-            Title = "Custom FOV",  
+            Title = "FOV Changer",  
             Content = Value and "Enabled" or "Disabled",  
             Duration = 2  
         })
     end
 })
 
--- Visualizer Toggle
-TradeTab:CreateToggle({
-    Name = "Show Hitbox Visualizer",
+-- SILENT AIM TOGGLE
+MainTab:CreateToggle({
+    Name = "Silent Aim",
     CurrentValue = false,
     Callback = function(Value)
-        forceConfirm = Value
+        silentAim = Value
+
         Rayfield:Notify({  
-            Title = "Hitbox Visualizer",  
+            Title = "Silent Aim",  
             Content = Value and "Enabled" or "Disabled",  
             Duration = 2  
         })
     end
 })
 
--- Max Hitbox Size Toggle
-TradeTab:CreateToggle({
-    Name = "Force Max Hitbox Size",
+-- WALLBANG TOGGLE
+MainTab:CreateToggle({
+    Name = "Wallbang",
     CurrentValue = false,
     Callback = function(Value)
-        forceWeapons = Value
+        wallbangActive = Value
+
         Rayfield:Notify({  
-            Title = "Max Hitbox",  
+            Title = "Wallbang",  
             Content = Value and "Enabled" or "Disabled",  
             Duration = 2  
         })
     end
 })
 
--- FOV Dynamic Zoom Toggle
-TradeTab:CreateToggle({
-    Name = "Dynamic FOV Zoom",
+-- ESP TOGGLE
+MainTab:CreateToggle({
+    Name = "Player ESP",
     CurrentValue = false,
     Callback = function(Value)
-        forceTokens = Value
+        espActive = Value
+
         Rayfield:Notify({  
-            Title = "Dynamic FOV",  
+            Title = "Player ESP",  
             Content = Value and "Enabled" or "Disabled",  
             Duration = 2  
         })
     end
 })
 
--- =============================================================================
--- BUTTONS (Instant Actions)
--- =============================================================================
-TradeTab:CreateButton({
-    Name = "Instantly Maximize FOV",
+-- BUTTONS (for instant actions)
+MainTab:CreateButton({
+    Name = "Reset Hitboxes (Instant)",
+    Callback = function()
+        Rayfield:Notify({
+            Title = "Hitbox System",
+            Content = "Hitboxes Reset to Default!",
+            Duration = 2
+        })
+        -- Add your hitbox reset logic here
+    end
+})
+
+MainTab:CreateButton({
+    Name = "Set Max FOV (Instant)",
     Callback = function()
         Rayfield:Notify({
             Title = "FOV Changer",
-            Content = "FOV Maxed Out Triggered!",
+            Content = "FOV Set to Max!",
             Duration = 2
         })
-        -- TODO: Insert game-specific RemoteEvent/Function logic here
+        -- Add your instant FOV change logic here
     end
 })
 
-TradeTab:CreateButton({
-    Name = "Instantly Expand Hitboxes",
+MainTab:CreateButton({
+    Name = "Refresh ESP (Instant)",
     Callback = function()
         Rayfield:Notify({
-            Title = "Hitbox Extender",
-            Content = "Hitbox Expansion Triggered!",
+            Title = "ESP System",
+            Content = "ESP Refreshed!",
             Duration = 2
         })
-        -- TODO: Insert game-specific RemoteEvent/Function logic here
+        -- Add your ESP refresh logic here
     end
 })
 
-TradeTab:CreateButton({
-    Name = "Refresh Hitbox Links",
+MainTab:CreateButton({
+    Name = "Optimize Performance (Instant)",
     Callback = function()
         Rayfield:Notify({
-            Title = "Hitbox Setup",
-            Content = "Hitbox Links Refreshed!",
+            Title = "Optimizer",
+            Content = "Performance Optimized!",
             Duration = 2
         })
-        -- TODO: Insert game-specific RemoteEvent/Function logic here
+        -- Add your optimization logic here
     end
 })
 
-TradeTab:CreateButton({
-    Name = "Reset Camera FOV",
-    Callback = function()
-        Rayfield:Notify({
-            Title = "FOV Setup",
-            Content = "Camera FOV Reset Triggered!",
-            Duration = 2
-        })
-        -- TODO: Insert game-specific RemoteEvent/Function logic here
-    end
-})
-
--- =============================================================================
--- LOOP SYSTEM (Background Routine)
--- =============================================================================
+-- LOOP SYSTEM (for toggles that need constant checking)
 task.spawn(function()
     while true do
         task.wait(0.5)
 
-        if freezeTrade then  
-            -- Original freezeTrade logic
+        if hitboxExtender then  
+            -- Add your hitbox extender logic here (e.g., resizing Head/HumanoidRootPart)  
             print("Hitbox Extender Active")  
         end  
 
-        if forceAccept then  
-            -- Original forceAccept logic
-            print("Custom FOV Active")  
+        if fovChanger then  
+            -- Add your FOV changer logic here (e.g., Workspace.CurrentCamera.FieldOfView = ...)  
+            print("FOV Changer Active")  
         end  
 
-        if forceConfirm then  
-            -- Original forceConfirm logic
-            print("Hitbox Visualizer Active")  
+        if silentAim then  
+            -- Add your silent aim logic here  
+            print("Silent Aim Active")  
         end  
 
-        if forceWeapons then  
-            -- Original forceWeapons logic
-            print("Max Hitbox Active")  
+        if wallbangActive then  
+            -- Add your wallbang logic here  
+            print("Wallbang Active")  
         end  
 
-        if forceTokens then  
-            -- Original forceTokens logic
-            print("Dynamic FOV Active")  
+        if espActive then  
+            -- Add your ESP logic here  
+            print("ESP Active")  
         end  
     end
 end)
 
--- =============================================================================
--- SETTINGS & CREDITS
--- =============================================================================
+-- SETTINGS
 SettingsTab:CreateToggle({
     Name = "UI Blur",
     CurrentValue = false,
     Callback = function(Value)
         if Value then
+            -- Add UI blur logic here
             print("UI Blur Enabled")
         else
+            -- Remove UI blur logic here
             print("UI Blur Disabled")
         end
     end
 })
 
-CreditsTab:CreateLabel("Script By scriptsnova")
+-- CREDITS
+CreditsTab:CreateLabel("Script By Scriptnova")
